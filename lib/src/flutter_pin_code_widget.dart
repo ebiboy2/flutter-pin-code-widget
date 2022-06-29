@@ -20,6 +20,9 @@ class PinCodeWidget extends StatefulWidget {
     this.deleteIconColor = Colors.white,
     this.onPressColorAnimation = Colors.yellow,
     this.clearOnFilled = true,
+    this.setSize = false,
+    this.padWidth = 50.0,
+    this.padHeight = 50.0,
   }) : super(key: key);
 
   /// Callback after all pins input
@@ -63,6 +66,15 @@ class PinCodeWidget extends StatefulWidget {
 
   /// clear indicators when all digits are filled
   final bool clearOnFilled;
+  
+  /// set dialpad size
+  final bool setSize;
+  
+  /// set dialpad width
+  final double padWidth;
+  
+  /// set dialpad height
+  final double padHeight;
 
   @override
   State<StatefulWidget> createState() => PinCodeState();
@@ -136,7 +148,7 @@ class PinCodeState<T extends PinCodeWidget> extends State<T> {
 
   Widget body(BuildContext context) {
     final deleteIconImage = Icon(
-      CupertinoIcons.delete_left,
+      Icons.backspace_outlined,
       color: widget.deleteIconColor,
     );
 
@@ -211,7 +223,13 @@ class PinCodeState<T extends PinCodeWidget> extends State<T> {
                               margin: const EdgeInsets.only(
                                   left: marginLeft, right: marginRight),
                               child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(
+                                style: setSize ? ElevatedButton.styleFrom(
+                                  minimumSize: Size(_width, _height),
+                                  primary: widget.buttonColor,
+                                  onPrimary: widget.onPressColorAnimation,
+                                  side: widget.borderSide,
+                                  shape: const CircleBorder(),
+                                ) : ElevatedButton.styleFrom(
                                   primary: widget.buttonColor,
                                   onPrimary: widget.onPressColorAnimation,
                                   side: widget.borderSide,
